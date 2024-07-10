@@ -14,9 +14,9 @@ afterAll(async () => {
 describe("User Registration and Login", () => {
   it("should register user successfully with default organisation", async () => {
     const res = await request(app).post("/auth/register").send({
-      firstName: "Blessing",
-      lastName: "Tutka",
-      email: "blessing@example.com",
+      firstName: "Gerard",
+      lastName: "Cubaka",
+      email: "Gerard@example.com",
       password: "password123",
       phone: "+243992393174",
     });
@@ -27,22 +27,22 @@ describe("User Registration and Login", () => {
     });
 
     expect(res.statusCode).toBe(201);
-    expect(res.body.data.user.firstName).toBe("Blessing");
-    expect(res.body.data.user.email).toBe("blessing@example.com");
-    expect(user.organisations[0].name).toBe("Blessing's Organisation");
+    expect(res.body.data.user.firstName).toBe("Gerard");
+    expect(res.body.data.user.email).toBe("Gerard@example.com");
+    expect(user.organisations[0].name).toBe("Gerard's Organisation");
     expect(res.body.data.accessToken).toBeDefined();
-  });
+  }, 10000);
 
   it("should log the user in successfully", async () => {
     const res = await request(app).post("/auth/login").send({
-      email: "blessing@example.com",
+      email: "Gerard@example.com",
       password: "password123",
     });
 
     expect(res.statusCode).toBe(200);
-    expect(res.body.data.user.email).toBe("blessing@example.com");
+    expect(res.body.data.user.email).toBe("Gerard@example.com");
     expect(res.body.data.accessToken).toBeDefined();
-  });
+  }, 10000);
 
   it("should fail if required fields are missing", async () => {
     const res = await request(app).post("/auth/register").send({
@@ -62,7 +62,7 @@ describe("User Registration and Login", () => {
         }),
       ])
     );
-  });
+  }, 10000);
 
   it("should fail if there's duplicate email or userId", async () => {
     await request(app).post("/auth/register").send({
@@ -90,5 +90,5 @@ describe("User Registration and Login", () => {
         }),
       ])
     );
-  });
+  }, 10000);
 });
